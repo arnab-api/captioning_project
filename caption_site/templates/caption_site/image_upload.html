@@ -1,0 +1,43 @@
+{% if img_obj %}
+    <h1>
+        Successfully uploaded image with id: {{img_obj.id}}
+    </h1>
+    <p> {{img_obj.image}} </p>
+    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+    <br>
+    {% for caption in caption_arr %}
+        {{caption}}
+        <br>
+    {% endfor %}
+
+    <a class="btn btn-primary" href="/caption/image_upload">add another image</a>
+
+{% else %}
+    <h1>
+        Image upload form
+    </h1>
+
+    <body>
+        <form action = "{% url "caption:processUploadedImage"%}" method="post" enctype="multipart/form-data" id="image_upload_form">
+            {% csrf_token %}
+            <input type="file" name="image" id="image">
+            <br>
+            {% comment %} <input type="text" name="human_annotation" id="human_annotation" value="human_annotation"> {% endcomment %}
+            <textarea name="human_annotation" id="human_annotation" value="human_annotation"  rows="4" cols="50">
+Human Annotation
+            </textarea>    
+            <br>
+            <ul>
+                {% for model in caption_models %}
+                    <li> {{model.model_name}}_{{model.id}}</li>
+                    <textarea name="caption_model_{{model.id}}" id="caption_model_{{model.id}}" value="caption_model_{{model.id}}"  rows="4" cols="50">
+{% comment %} annotated by {{model.model_name}} {% endcomment %}
+                    </textarea>
+                {% endfor %}
+            </ul>
+            <button type="submit">Upload</button>
+        </form>
+    </body>
+
+     
+{% endif %}

@@ -1,0 +1,22 @@
+<h1>
+    detail of image with id {{ image_id }}
+</h1>
+
+<img src="{{ img_url }}" alt="connect" style="max-height:300px">
+
+<body>
+    <p>
+        {{ human_annotation }}
+    </p>
+    {% for caption in caption_arr %}
+        <b>Genereted by {{ caption.model_name }}>> {{caption.caption_text}}</b>
+        <ul>
+            {% for feedback in caption.feedback_arr %}
+                <li>{{feedback}}</li>
+            {% endfor %}
+        </ul>
+        <br>
+
+    {% endfor %}
+</body>
+
