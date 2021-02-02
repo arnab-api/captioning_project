@@ -152,3 +152,51 @@ def startfeedback(request):
 
 
 ############################### PresetOpinions #############################
+
+import json
+def pushReport2client(request):
+    report = []
+    images = Image.objects.all()
+    for image in images:
+        img_json = {
+            "human_annotation"  : image.human_annotation,
+            "image_path"        : image.image.url 
+        }
+
+        caption_arr = []
+        captions = image.caption_set.all()
+        for caption in captions:
+            caption_model = CaptionModel.objects.get(pk= caption.caption_model_id)
+            caption_obj = {
+                "caption"   : caption.caption_text,
+                "model"     : caption_model.model_name
+            }
+            
+
+            feedback_arr = []
+            feedbacks = caption.feedback_set.all()
+            for feedback in feedbacks:
+                feedback_obj = {
+                    "rating": feedback.rating,
+                    "user_id": feedback.user_id,
+                    "comments": feedback.comments
+                }
+
+                opinion_arr=[]
+                opinions = feedback.feedback2presetopinion_set.all()
+                for opinion in opinions:
+                    opinion_text = PresetOpinionOption.objects.get(pk= opinion.opinion_id).opinion
+                    opinion_arr.append(opinion_text)
+
+                feedback_obj['opinion_arr'] = opinion_arr
+                feedback_arr.append(feedback_obj)
+
+
+            caption_obj['feedback_arr'] = feedback_arr
+            caption_arr.append(caption_obj)
+
+        img_json['caption_arr'] = caption_arr
+        report.append(img_json)
+
+    json_report = json.dumps(report, indent=2)
+    return HttpResponse(json_report)

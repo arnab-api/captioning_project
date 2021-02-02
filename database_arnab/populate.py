@@ -2,7 +2,9 @@ import sqlite3
 import pandas as pd
 
 #################################################################################################
-connection = sqlite3.connect("database_arnab/test.sqlite3")
+# DATABASE_NAME = "database_arnab/test.sqlite3"
+DATABASE_NAME = "db.sqlite3"
+connection = sqlite3.connect(DATABASE_NAME)
 cursor = connection.cursor()
 #################################################################################################
 
@@ -124,3 +126,9 @@ for index, row in df.iterrows():
 
     print()
 
+# caption_site_caption
+# caption_site_feedback
+# caption_site_feedback2presetopinion
+# caption_site_image
+
+# refreshTable(cursor, connection, "caption_site_image")
