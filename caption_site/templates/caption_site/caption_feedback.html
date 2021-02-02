@@ -21,7 +21,7 @@
             {% for opinion in preset_opinions %}
                     {% comment %} {{opinion.opinion}} {% endcomment %}
                 <input type="checkbox" id="opinion_{{opinion.id}}" name="opinion_{{opinion.id}}" value="opinion_{{opinion.id}}">
-                <label for="opinion_{{opinion.id}}"> {{opinion.opinion}}" </label><br>    
+                <label for="opinion_{{opinion.id}}"> {{opinion.opinion}} </label><br>    
             {% endfor %}
         </ul>
         <b>Additional comments??</b>

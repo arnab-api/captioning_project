@@ -10,5 +10,17 @@
 --     values("missed context");
 
 -- pragma table_info(caption_site_feedback);
-insert into caption_site_presetopinionoption(opinion)
-    values("Miscounted numbers");
+
+-- insert into caption_site_image(human_annotation, image)
+--     values(
+--         "Three people sit at a picnic table outside of a building painted like a union jack", 
+--         "images/caption_site/1258913059_07c613f7ff.png"
+--     );
+
+-- delete from caption_site_feedback;
+-- delete from caption_site_caption;
+-- delete from caption_site_captionmodel;
+-- delete from caption_site_feedback;
+-- delete from caption_site_feedback2presetopinion;
+-- delete from caption_site_image;
+-- delete from caption_site_presetopinionoption;

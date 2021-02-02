@@ -11,6 +11,7 @@ def index(request):
     return render(request, "caption_site/index.html")
 
 ################################## Image ##################################
+# jwolli5m7i648zdv3z7kbbr0x92cskj0
 def image_detail(request, image_id):
     try:
         image = Image.objects.get(pk=image_id)
@@ -81,6 +82,8 @@ def processUploadedImage(request):
 ################################ Feedback ################################
 
 def getFeedbackForm(request):
+    if not request.session.session_key:
+        return render(request, "caption_site/index.html")
     caption = Caption.objects.random()
     image = Image.objects.get(pk=caption.image_id)
     caption_model = CaptionModel.objects.get(pk=caption.caption_model_id)
@@ -140,14 +143,11 @@ def startfeedback(request):
 
 
 
-
 ################################# Caption #################################
 
 
 
-
 ################################# Feedback ################################
-
 
 
 
