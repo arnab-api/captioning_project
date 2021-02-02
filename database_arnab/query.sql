@@ -24,3 +24,14 @@
 -- delete from caption_site_feedback2presetopinion;
 -- delete from caption_site_image;
 -- delete from caption_site_presetopinionoption;
+
+-- pragma table_info(caption_site_captionmodel);
+-- insert into caption_site_captionmodel(model_name, description, url)
+--     values(
+--         "Microsoft Caption Bot", 
+--         "N/A", 
+--         "https://www.google.com/"
+--     );
+
+-- select * from caption_site_caption
+--     where id > 200;

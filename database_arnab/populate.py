@@ -96,7 +96,7 @@ df = pd.read_csv("database_arnab/Models and Captions - Sheet1.csv")
 hd = df.head()
 #################################################################################################
 # refreshTable(cursor, connection, "caption_site_presetopinionoption")
-
+# refreshTable(cursor, connection, "caption_site_caption")
 
 attr = []
 for val in hd:
@@ -110,6 +110,8 @@ for index, row in df.iterrows():
 
     if(getImageIdusingImageName(cursor, image_name) == -1):
         insertImage(cursor, connection, human_annotation, image_name)
+    else:
+        print("image is already in the database")
     image_id = getImageIdusingImageName(cursor, image_name)
 
     for i in range(2, len(attr)):
