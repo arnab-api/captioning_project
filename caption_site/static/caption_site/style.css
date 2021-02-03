@@ -1,3 +1,87 @@
-li a{
-    color: blue
-} 
+body {
+    background-image: url('back_images/background.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    padding-top: 5px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 50px;
+    background-color: rgb(255, 255, 255);
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+    border-radius: 15px;
+    position: relative;
+    min-height: 60%;
+}
+
+.caption_btn {
+    width: 120px;
+    height: 30px;
+    margin-left: -60px;
+    left: 50%;
+    position: absolute;
+    bottom: 2%;
+}
+
+.feedback_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.slider {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+}
+
+input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 19px;
+    cursor: pointer;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3) inset;
+    background: linear-gradient(to right, #b10404, #f6bc1d 40%, #80f86b 65%, #046619);
+    border-radius: 20px;
+    border: 0.2px solid #010101;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -1px;
+}
+
+#val {
+    font-size: 1.6rem;
+    position: absolute;
+    left: 0;
+    bottom: 40px;
+    width: 100px;
+}

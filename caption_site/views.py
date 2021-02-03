@@ -100,13 +100,12 @@ def getFeedbackForm(request):
 
 
 USER_FEEDBACK_MAX = 5
-
 def processfeedback(request):
     caption_id = int(request.POST['caption_id'])
     caption = Caption.objects.get(pk=caption_id)
     comments = request.POST['comments']
-
-    feedback = Feedback(rating = 10, user_id=request.session.session_key, caption_id=caption.id, comments=comments)
+    rating = request.POST.get('slide_mridul')
+    feedback = Feedback(rating = rating, user_id=request.session.session_key, caption_id=caption.id, comments=comments)
     feedback.save()
 
     checkBoxinfo = []
@@ -135,6 +134,7 @@ def startfeedback(request):
     request.session["feedback_count"] = 0
     # return HttpResponse(request.session.session_key)
     return HttpResponseRedirect(reverse("caption:feedback"))
+    # return HttpResponse(request.POST.get('slide_arnab'))
 
 
 
@@ -198,5 +198,6 @@ def pushReport2client(request):
         img_json['caption_arr'] = caption_arr
         report.append(img_json)
 
-    json_report = json.dumps(report, indent=2)
-    return HttpResponse(json_report)
+    json_report = json.dumps(report, indent=4)
+    # return HttpResponse(json_report)
+    return render(request, "caption_site/showjson.html", { "json_str": json_report})

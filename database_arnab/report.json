@@ -355,7 +355,17 @@
             {
                 "caption": "I think it's a dog with a toy.",
                 "model": "Microsoft Caption Bot",
-                "feedback_arr": []
+                "feedback_arr": [
+                    {
+                        "rating": 47,
+                        "user_id": "p7ng09ycfevb4i6z860c94x3d7h9jqe3",
+                        "comments": "but very impressive that the model could detect the dog",
+                        "opinion_arr": [
+                            "Missclassified object",
+                            "Wrong assosiation"
+                        ]
+                    }
+                ]
             }
         ]
     },
