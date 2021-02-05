@@ -26,8 +26,8 @@ SECRET_KEY = '(zlmbrtn1eboca@n7ome_er^4erj4)j&30_dqupux%b)_ccxh2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ["192.168.31.172", "localhost", "127.0.0.1", "150.108.64.64"]
+ALLOWED_HOSTS = ["*"]
 
 # Base url to serve media files
 MEDIA_URL = '/media/'
