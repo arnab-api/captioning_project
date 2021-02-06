@@ -85,7 +85,15 @@ USER_FEEDBACK_MAX = 20
 def getFeedbackForm(request):
     if not request.session.session_key:
         return render(request, "caption_site/index.html")
-    caption = Caption.objects.random()
+    
+    if(request.session["feedback_caption"] == -1):
+        caption = Caption.objects.random()
+        request.session["feedback_caption"] = caption.id
+        warn_null_feedback = False
+    else:
+        caption = Caption.objects.get(pk = request.session["feedback_caption"])
+        warn_null_feedback = True
+    
     image = Image.objects.get(pk=caption.image_id)
     caption_model = CaptionModel.objects.get(pk=caption.caption_model_id)
     # return HttpResponse("showing caption {}:  ".format(caption.id) + str(caption))
@@ -97,11 +105,32 @@ def getFeedbackForm(request):
         'image'             : image,
         'caption_model'     : caption_model,
         'preset_opinions'   : preset_opinions,
-        'USER_FEEDBACK_MAX' : USER_FEEDBACK_MAX
+        'USER_FEEDBACK_MAX' : USER_FEEDBACK_MAX,
+        'warn_null_feedback': warn_null_feedback
     })  
 
+def checkValidFeedback(request):
+    rating = request.POST.get('slide_mridul')
+    if(rating != "0"):
+        return True
+
+    comments = request.POST['comments']
+    if(len(comments) != 0):
+        return True
+
+    preset_opinions = PresetOpinionOption.objects.all()
+    for opinion in preset_opinions:
+        key = "opinion_"+str(opinion.id)
+        if key in request.POST:
+            return True
+
+    return False
 
 def processfeedback(request):
+    check = checkValidFeedback(request)
+    if (check == False):
+        return HttpResponseRedirect(reverse("caption:feedback"))
+
     caption_id = int(request.POST['caption_id'])
     caption = Caption.objects.get(pk=caption_id)
     comments = request.POST['comments']
@@ -124,6 +153,7 @@ def processfeedback(request):
 
     request.session["feedback_count"] += 1
     # return HttpResponse(caption_id)
+    request.session["feedback_caption"] = -1 # feedback stored successfully
     if(request.session["feedback_count"] < USER_FEEDBACK_MAX):
         return HttpResponseRedirect(reverse("caption:feedback"))
     else:
@@ -133,6 +163,7 @@ def startfeedback(request):
     if not request.session.session_key:
         request.session.save()
     request.session["feedback_count"] = 0
+    request.session["feedback_caption"] = -1
     # return HttpResponse(request.session.session_key)
     return HttpResponseRedirect(reverse("caption:feedback"))
     # return HttpResponse(request.POST.get('slide_arnab'))
