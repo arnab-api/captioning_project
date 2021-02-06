@@ -38,16 +38,21 @@
             <ul style="font-size:120%;">
                 {% for opinion in preset_opinions %} {% comment %} {{opinion.opinion}} {% endcomment %}
                     <input type="checkbox" id="opinion_{{opinion.id}}" name="opinion_{{opinion.id}}" value="opinion_{{opinion.id}}">
-                    <label for="opinion_{{opinion.id}}" style="text-align: center;"> {{opinion.opinion}} </label>
-                    <br> 
+                    <div class = "check_label">
+                    {% ifequal opinion.is_positive True%}
+                        <label for="opinion_{{opinion.id}}" style="color: green" > <b>{{opinion.opinion}}</b> </label>
+                    {% else %}
+                        <label for="opinion_{{opinion.id}}" > {{opinion.opinion}} </label>
+                    {% endifequal %}
+                    </div>
                 {% endfor %}
             </ul>
             <br>
             <b>Others<b> (Please write in the textbox)
             {% comment %} <textarea name="comments" id="comments" value="comments" rows="4" cols="70" style="margin-left: 47px;"></textarea> {% endcomment %}
             <textarea name="comments" id="comments" value="comments" rows="4" cols="70" style="width:100%;"></textarea>
-
-            <button type="submit" class="caption_btn" style="width:20%;"><b>Give Feedback</b></button>
+            <br>
+            <button type="submit" class="caption_btn"><b>Give Feedback</b></button>
         </form>
     </div>
 </body>

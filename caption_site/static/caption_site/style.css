@@ -25,10 +25,9 @@ h1 {
 }
 
 .caption_btn {
-    width: 120px;
+    margin-left: 33%;
+    width: 20%;
     height: 30px;
-    margin-left: -60px;
-    left: 50%;
     position: absolute;
     bottom: 2%;
 }
@@ -38,6 +37,13 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     width: 60%;
+}
+
+.check_label
+{
+    color: rgb(0, 0, 5);
+    margin-left: 25px;
+    margin-top: -20px;
 }
 
 .slider {

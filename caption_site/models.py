@@ -60,7 +60,7 @@ class Feedback(models.Model):
 
 class PresetOpinionOption(models.Model):
     opinion = models.CharField(max_length=200)
-
+    is_positive = models.BooleanField(default=False)
     def __str__(self):
         return self.opinion
 
