@@ -79,15 +79,35 @@ def processUploadedImage(request):
 
 
 ################################ Feedback ################################
+USER_FEEDBACK_MAX_THRES = 70
+def hasDoneEnoughFeedbacks(feedbacks):
+    if(len(feedbacks) >= USER_FEEDBACK_MAX_THRES): 
+        return True
+    return False
+
+def getUnusedCaption(given_feedbacks):
+    caption = Caption.objects.random()
+    if caption.id in given_feedbacks:
+        return getUnusedCaption(given_feedbacks)
+    return caption
+
 
 USER_FEEDBACK_MAX = 20
-
 def getFeedbackForm(request):
     if not request.session.session_key:
         return render(request, "caption_site/index.html")
+
+    user = request.session.session_key
+    feedbacks = Feedback.objects.filter(user_id=user)
+    if hasDoneEnoughFeedbacks(feedbacks) == True:
+        return HttpResponse("Thanks!!! But you have done enough. Please stop now :p")
     
+    given_feedbacks = []
+    for feedback in feedbacks:
+        given_feedbacks.append(feedback.caption_id)
+
     if(request.session["feedback_caption"] == -1):
-        caption = Caption.objects.random()
+        caption = getUnusedCaption(given_feedbacks)
         request.session["feedback_caption"] = caption.id
         warn_null_feedback = False
     else:
