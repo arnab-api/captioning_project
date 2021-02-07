@@ -6,8 +6,15 @@
 -- delete from caption_site_caption
 --     where id < 20;
 
--- insert into caption_site_presetopinionoption(opinion)
---     values("missed context");
+-- insert into caption_site_presetopinionoption(opinion, is_positive)
+--     values("The caption does not have sufficient details, but it is okay to understand the image", True);
+
+select * from  caption_site_feedback2presetopinion
+    where opinion_id = 22;
+
+-- update caption_site_feedback2presetopinion
+--     set opinion_id = 22
+--     where opinion_id = 20;
 
 -- pragma table_info(caption_site_feedback);
 

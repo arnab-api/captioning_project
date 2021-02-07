@@ -7,8 +7,14 @@ from django.urls import reverse
 from .models import CaptionsManager, Image, Caption, CaptionModel, Feedback, PresetOpinionOption, Feedback2PresetOpinion
 
 
+#########################################################################
+USER_FEEDBACK_MAX = 20
+USER_FEEDBACK_MAX_THRES = 70
+#########################################################################
+
+
 def index(request):
-    return render(request, "caption_site/index.html")
+    return render(request, "caption_site/index.html", {"USER_FEEDBACK_MAX": USER_FEEDBACK_MAX})
 
 ################################## Image ##################################
 def image_detail(request, image_id):
@@ -79,7 +85,6 @@ def processUploadedImage(request):
 
 
 ################################ Feedback ################################
-USER_FEEDBACK_MAX_THRES = 70
 def hasDoneEnoughFeedbacks(feedbacks):
     if(len(feedbacks) >= USER_FEEDBACK_MAX_THRES): 
         return True
@@ -92,7 +97,7 @@ def getUnusedCaption(given_feedbacks):
     return caption
 
 
-USER_FEEDBACK_MAX = 20
+
 def getFeedbackForm(request):
     if not request.session.session_key:
         return render(request, "caption_site/index.html")
@@ -237,8 +242,9 @@ def pushReport2client(request):
                 opinion_arr=[]
                 opinions = feedback.feedback2presetopinion_set.all()
                 for opinion in opinions:
-                    opinion_text = PresetOpinionOption.objects.get(pk= opinion.opinion_id).opinion
-                    opinion_arr.append(opinion_text)
+                    opinion_obj = PresetOpinionOption.objects.get(pk= opinion.opinion_id)
+                    tup = (opinion_obj.id, opinion_obj.opinion)
+                    opinion_arr.append(str(tup))
 
                 feedback_obj['opinion_arr'] = opinion_arr
                 feedback_arr.append(feedback_obj)
