@@ -152,6 +152,10 @@ def checkValidFeedback(request):
     return False
 
 def processfeedback(request):
+
+    if not request.session.session_key:
+        return render(request, "caption_site/index.html")
+
     check = checkValidFeedback(request)
     if (check == False):
         return HttpResponseRedirect(reverse("caption:feedback"))
