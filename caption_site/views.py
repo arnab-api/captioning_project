@@ -215,7 +215,8 @@ def startfeedback(request):
 ############################### PresetOpinions #############################
 
 import json
-def pushReport2client(request):
+
+def getJSONreport():
     report = []
     images = Image.objects.all()
     for image in images:
@@ -259,7 +260,78 @@ def pushReport2client(request):
 
         img_json['caption_arr'] = caption_arr
         report.append(img_json)
+    
+    return report
 
+def pushReport2clientJSON(request):
+    report = getJSONreport()
     json_report = json.dumps(report, indent=4)
     # return HttpResponse(json_report)
     return render(request, "caption_site/showjson.html", { "json_str": json_report})
+
+def arr2str(arr,  delimeter=","):
+    first = True
+    ret = ""
+    for val in arr:
+        if first == False:
+            ret += ", "
+        ret += str(val)
+        first = False
+    return ret
+
+def getCSVreport():
+    report = "image_path, caption_gt, caption, model, user_id, rating, comment"
+    preset_opinions = PresetOpinionOption.objects.all()
+    opinion_header = ""
+    opinion_id_compressed = {}
+    for i in range(len(preset_opinions)):
+        opinion = preset_opinions[i]
+        opinion_id_compressed[int(opinion.id)] = i
+        opinion_header += ", opinion_{}".format(i)
+    report += opinion_header + "\n"
+    images = Image.objects.all()
+    for image in images:
+        image_info = "{}, {}, ".format(image.image.url, image.human_annotation)
+        # report += image_info + "\n"
+        captions = image.caption_set.all()
+        for caption in captions:
+            caption_model = CaptionModel.objects.get(pk= caption.caption_model_id)
+            caption_info = "{}, {}, ".format(caption.caption_text, caption_model.model_name)
+            # report += image_info + caption_info + "\n"
+            feedbacks = caption.feedback_set.all()
+            for feedback in feedbacks:
+                feedback_info = "{}, {}, \"{}\", ".format(feedback.user_id, feedback.rating, feedback.comments)
+                # report += image_info + caption_info + feedback_info + "\n"
+                opinion_one_hot = [0]*len(preset_opinions)
+                opinions = feedback.feedback2presetopinion_set.all()
+                # arr_id_arr = []
+                for opinion in opinions:
+                    opinion_obj = PresetOpinionOption.objects.get(pk= opinion.opinion_id)
+                    tup = (opinion_obj.id, opinion_obj.opinion)
+    #                 opinion_arr.append(str(tup))
+                    arr_id = opinion_id_compressed[opinion_obj.id]
+                    # arr_id_arr.append(arr_id)
+                    opinion_one_hot[arr_id] = 1
+                opinion_one_hot = arr2str(opinion_one_hot)
+                report += image_info + caption_info + feedback_info + opinion_one_hot + "\n"
+
+
+    #             feedback_obj['opinion_arr'] = opinion_arr
+    #             feedback_arr.append(feedback_obj)
+
+
+    #         caption_obj['feedback_arr'] = feedback_arr
+    #         caption_arr.append(caption_obj)
+
+    #     img_json['caption_arr'] = caption_arr
+    #     report.append(img_json)
+    
+    return report
+
+def pushReport2clientCSV(request):
+    report = getCSVreport()
+    return render(request, "caption_site/showjson.html", { "json_str": report})
+
+
+
+

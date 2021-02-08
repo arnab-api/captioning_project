@@ -11,5 +11,6 @@ urlpatterns = [
     path('feedback', views.getFeedbackForm, name="feedback"),
     path('processfeedback', views.processfeedback, name='processfeedback'),
     path('startfeedback', views.startfeedback, name='startfeedback'),
-    path('downloadreport', views.pushReport2client, name='downloadreport'),
+    path('downloadreport', views.pushReport2clientJSON, name='downloadreport'),
+    path('download_csv', views.pushReport2clientCSV, name='download_csv')
 ]
