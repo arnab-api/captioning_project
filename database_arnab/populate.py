@@ -94,8 +94,9 @@ def refreshTable(cursor, connection, table_name):
 
 
 #################################################################################################
-df = pd.read_csv("database_arnab/Models and Captions - Sheet1.csv")
+df = pd.read_csv("database_arnab/Models and Captions__new_20.csv")
 hd = df.head()
+# print(hd)
 #################################################################################################
 # refreshTable(cursor, connection, "caption_site_presetopinionoption")
 # refreshTable(cursor, connection, "caption_site_caption")

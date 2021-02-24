@@ -40,7 +40,7 @@
 --         "https://www.google.com/"
 --     );
 
-select * from caption_site_caption
+-- select * from caption_site_caption
 
 -- 15 16 >> 15
 -- update caption_site_presetopinionoption
@@ -60,3 +60,9 @@ select * from caption_site_caption
 
 -- delete from caption_site_presetopinionoption
 --     where id = 16;
+
+-- select * from caption_site_image;
+-- delete from caption_site_image
+--     where id > 50;
+-- delete from caption_site_caption
+--     where id >= 299;
