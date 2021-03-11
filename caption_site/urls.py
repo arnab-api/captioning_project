@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('processfeedback', views.processfeedback, name='processfeedback'),
     path('startfeedback', views.startfeedback, name='startfeedback'),
     path('downloadreport', views.pushReport2clientJSON, name='downloadreport'),
-    path('download_csv', views.pushReport2clientCSV, name='download_csv')
+    path('download_csv', views.pushReport2clientCSV, name='download_csv'),
+    re_path(r'^(?!media).*', views.show_pagenotfound, name='pagenotfound')
 ]

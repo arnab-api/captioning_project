@@ -332,6 +332,9 @@ def pushReport2clientCSV(request):
     report = getCSVreport()
     return render(request, "caption_site/showjson.html", { "json_str": report})
 
+def show_pagenotfound(request):
+    raise Http404("Invalid Url")
+
 
 
 
